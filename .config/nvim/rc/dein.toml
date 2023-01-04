@@ -27,5 +27,3 @@ repo = 'neoclide/coc.nvim'
 rev = 'release'
 merged = 0
 
-[[plugins]]
-repo = 'ryanoasis/vim-devicons'

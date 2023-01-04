@@ -12,144 +12,144 @@ set helplang=ja
 " terminal ノーマルモード移行<Esc>キーで出来る様にする
 tnoremap <Esc> <C-\><C-n>
 
-call plug#begin('$HOME/.local/share/nvim/plugged')
-Plug 'neovim/nvim-lspconfig'
-Plug 'rakr/vim-one'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'airblade/vim-gitgutter'
-Plug 'rust-lang/rust.vim'
-Plug 'ryanoasis/vim-devicons'
-Plug 'vim-denops/denops.vim'
-
-Plug 'Shougo/ddc.vim'
-Plug 'Shougo/ddc-around'
-Plug 'Shougo/ddc-matcher_head'
-Plug 'Shougo/ddc-matcher_length'
-Plug 'Shougo/ddc-sorter_rank'
-Plug 'Shougo/ddc-nvim-lsp'
-Plug 'Shougo/pum.vim'
-Plug 'Shougo/neco-vim'
-Plug 'Shougo/ddc-cmdline-history'
-Plug 'tani/ddc-fuzzy'
-Plug 'lambdalisue/fern.vim'
-
-Plug 'matsui54/denops-popup-preview.vim'
-Plug 'ray-x/lsp_signature.nvim'
-
-call plug#end()
-
-"========================================="
-" ddc.vim plugin setting 
-"========================================="
-" lspを表示だけするならaroundは必須ではないけど基礎的なsourceなので記載
-call ddc#custom#patch_global('sources', ['nvim-lsp', 'around'])
-call ddc#custom#patch_global('sourceOptions', #{
-  \   _: #{
-  \     ignoreCase: v:true,
-  \     matchers: ['matcher_head'],
-  \     sorters: ['sorter_rank'],
-  \   },
-  \   around: #{
-  \     mark: 'A',
-  \     matchers: ['matcher_head', 'matcher_length'],
-  \   },
-  \   nvim-lsp: #{
-  \     mark: 'lsp',
-  \     forceCompletionPattern: '\.\w*|:\w*|->\w*',
-  \   },
-  \ })
-
-" ちょっとここの設定の意味はよくわからない
-call ddc#custom#patch_global('sourceParams', #{
-  \ nvim-lsp: #{ maxSize: 500, kindLabels: #{ Class: 'c' } },
-  \ })
-
-" 明示的に起動が必要（忘れがち）
-call ddc#enable()
-call popup_preview#enable()
-
-" <TAB>/<S-TAB> completion.
-inoremap <silent><expr> <TAB>
-  \ pumvisible() ? '<C-n>' :
-  \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-  \ '<TAB>' : ddc#map#manual_complete()
-inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
-
-lua require("lsp_signature").setup()
-"========================================="
-" ddc-fuzzy plugin setting 
-"========================================="
-call ddc#custom#patch_global('completionMenu', 'pum.vim')
-call ddc#custom#patch_global('sourceOptions', #{
-  \   _: #{
-  \     ignoreCase: v:true,
-  \     matchers: ['matcher_fuzzy'],
-  \     sorters: ['sorter_fuzzy'],
-  \     converters: ['converter_fuzzy']
-  \   },
-  \   around: #{ mark: 'A' },
-  \   nvim-lsp: #{
-  \     mark: 'lsp',
-  \     forceCompletionPattern: '\.\w*|:\w*|->\w*',
-  \   },
-  \ })
-
-" <TAB>/<S-TAB> completion. ここはddcのtab補完設定なのでpum.vimを使うなら不要
-" inoremap <silent><expr> <TAB>
-"   \ pumvisible() ? '<C-n>' :
-"   \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-"   \ '<TAB>' : ddc#map#manual_complete()
-" inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
-
-inoremap <Tab>   <Cmd>call pum#map#insert_relative(+1)<CR>
-inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
-inoremap <C-n>   <Cmd>call pum#map#insert_relative(+1)<CR>
-inoremap <C-p>   <Cmd>call pum#map#insert_relative(-1)<CR>
-inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
-inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
-inoremap <PageDown> <Cmd>call pum#map#insert_relative_page(+1)<CR>
-inoremap <PageUp>   <Cmd>call pum#map#insert_relative_page(-1)<CR>
-
-"========================================="
-" cmdline plugin setting
-" Plug 'Shougo/neco-vim'
-" Plug 'Shougo/ddc-cmdline-history'の設定
-"========================================="
-cnoremap <expr> <TAB>   pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' : ddc#map#manual_complete()
-cnoremap <expr> <S-TAB> pum#visible() ? '<Cmd>call pum#map#insert_relative(-1)<CR>' : ddc#map#manual_complete()
-cnoremap <expr> <C-n>   pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' : '<C-n>'
-cnoremap <expr> <C-p>   pum#visible() ? '<Cmd>call pum#map#insert_relative(-1)<CR>' : '<C-p>'
-cnoremap <expr> <CR>    pum#visible() ? '<Cmd>call pum#map#confirm()<CR>' : '<CR>'
-" cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
-" cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
-nnoremap :       <Cmd>call CommandlinePre()<CR>:
-
-function! CommandlinePre() abort
-  " Overwrite sources
-  let s:prev_buffer_config = ddc#custom#get_buffer()
-  call ddc#custom#patch_buffer('sources', ['necovim', 'cmdline-history'])
-  call ddc#custom#patch_buffer('autoCompleteEvents', ['CmdlineChanged'])
-  call ddc#custom#patch_buffer('sourceOptions', #{
-    \   _:  #{
-    \    ignoreCase: v:true,
-    \    matchers:   ['matcher_fuzzy'],
-    \    sorters:    ['sorter_fuzzy'],
-    \    converters: ['converter_fuzzy']
-    \   },
-    \   necovim: #{ mark: 'neco' },
-    \   cmdline-history: #{ mark: 'hist' },
-    \ })
-
-  autocmd CmdlineLeave ++once call CommandlinePost()
-
-  " Enable command line completion
-  call ddc#enable_cmdline_completion()
-endfunction
-function! CommandlinePost() abort
-  " Restore sources
-  call ddc#custom#set_buffer(s:prev_buffer_config)
-endfunction
+"call plug#begin('$HOME/.local/share/nvim/plugged')
+"Plug 'neovim/nvim-lspconfig'
+"Plug 'rakr/vim-one'
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+"Plug 'airblade/vim-gitgutter'
+"Plug 'rust-lang/rust.vim'
+"Plug 'ryanoasis/vim-devicons'
+"Plug 'vim-denops/denops.vim'
+"
+"Plug 'Shougo/ddc.vim'
+"Plug 'Shougo/ddc-around'
+"Plug 'Shougo/ddc-matcher_head'
+"Plug 'Shougo/ddc-matcher_length'
+"Plug 'Shougo/ddc-sorter_rank'
+"Plug 'Shougo/ddc-nvim-lsp'
+"Plug 'Shougo/pum.vim'
+"Plug 'Shougo/neco-vim'
+"Plug 'Shougo/ddc-cmdline-history'
+"Plug 'tani/ddc-fuzzy'
+"Plug 'lambdalisue/fern.vim'
+"
+"Plug 'matsui54/denops-popup-preview.vim'
+"Plug 'ray-x/lsp_signature.nvim'
+"
+"call plug#end()
+"
+""========================================="
+"" ddc.vim plugin setting 
+""========================================="
+"" lspを表示だけするならaroundは必須ではないけど基礎的なsourceなので記載
+"call ddc#custom#patch_global('sources', ['nvim-lsp', 'around'])
+"call ddc#custom#patch_global('sourceOptions', #{
+"  \   _: #{
+"  \     ignoreCase: v:true,
+"  \     matchers: ['matcher_head'],
+"  \     sorters: ['sorter_rank'],
+"  \   },
+"  \   around: #{
+"  \     mark: 'A',
+"  \     matchers: ['matcher_head', 'matcher_length'],
+"  \   },
+"  \   nvim-lsp: #{
+"  \     mark: 'lsp',
+"  \     forceCompletionPattern: '\.\w*|:\w*|->\w*',
+"  \   },
+"  \ })
+"
+"" ちょっとここの設定の意味はよくわからない
+"call ddc#custom#patch_global('sourceParams', #{
+"  \ nvim-lsp: #{ maxSize: 500, kindLabels: #{ Class: 'c' } },
+"  \ })
+"
+"" 明示的に起動が必要（忘れがち）
+"call ddc#enable()
+"call popup_preview#enable()
+"
+"" <TAB>/<S-TAB> completion.
+"inoremap <silent><expr> <TAB>
+"  \ pumvisible() ? '<C-n>' :
+"  \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+"  \ '<TAB>' : ddc#map#manual_complete()
+"inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
+"
+"lua require("lsp_signature").setup()
+""========================================="
+"" ddc-fuzzy plugin setting 
+""========================================="
+"call ddc#custom#patch_global('completionMenu', 'pum.vim')
+"call ddc#custom#patch_global('sourceOptions', #{
+"  \   _: #{
+"  \     ignoreCase: v:true,
+"  \     matchers: ['matcher_fuzzy'],
+"  \     sorters: ['sorter_fuzzy'],
+"  \     converters: ['converter_fuzzy']
+"  \   },
+"  \   around: #{ mark: 'A' },
+"  \   nvim-lsp: #{
+"  \     mark: 'lsp',
+"  \     forceCompletionPattern: '\.\w*|:\w*|->\w*',
+"  \   },
+"  \ })
+"
+"" <TAB>/<S-TAB> completion. ここはddcのtab補完設定なのでpum.vimを使うなら不要
+"" inoremap <silent><expr> <TAB>
+""   \ pumvisible() ? '<C-n>' :
+""   \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+""   \ '<TAB>' : ddc#map#manual_complete()
+"" inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
+"
+"inoremap <Tab>   <Cmd>call pum#map#insert_relative(+1)<CR>
+"inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
+"inoremap <C-n>   <Cmd>call pum#map#insert_relative(+1)<CR>
+"inoremap <C-p>   <Cmd>call pum#map#insert_relative(-1)<CR>
+"inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+"inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+"inoremap <PageDown> <Cmd>call pum#map#insert_relative_page(+1)<CR>
+"inoremap <PageUp>   <Cmd>call pum#map#insert_relative_page(-1)<CR>
+"
+""========================================="
+"" cmdline plugin setting
+"" Plug 'Shougo/neco-vim'
+"" Plug 'Shougo/ddc-cmdline-history'の設定
+""========================================="
+"cnoremap <expr> <TAB>   pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' : ddc#map#manual_complete()
+"cnoremap <expr> <S-TAB> pum#visible() ? '<Cmd>call pum#map#insert_relative(-1)<CR>' : ddc#map#manual_complete()
+"cnoremap <expr> <C-n>   pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' : '<C-n>'
+"cnoremap <expr> <C-p>   pum#visible() ? '<Cmd>call pum#map#insert_relative(-1)<CR>' : '<C-p>'
+"cnoremap <expr> <CR>    pum#visible() ? '<Cmd>call pum#map#confirm()<CR>' : '<CR>'
+"" cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+"" cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+"nnoremap :       <Cmd>call CommandlinePre()<CR>:
+"
+"function! CommandlinePre() abort
+"  " Overwrite sources
+"  let s:prev_buffer_config = ddc#custom#get_buffer()
+"  call ddc#custom#patch_buffer('sources', ['necovim', 'cmdline-history'])
+"  call ddc#custom#patch_buffer('autoCompleteEvents', ['CmdlineChanged'])
+"  call ddc#custom#patch_buffer('sourceOptions', #{
+"    \   _:  #{
+"    \    ignoreCase: v:true,
+"    \    matchers:   ['matcher_fuzzy'],
+"    \    sorters:    ['sorter_fuzzy'],
+"    \    converters: ['converter_fuzzy']
+"    \   },
+"    \   necovim: #{ mark: 'neco' },
+"    \   cmdline-history: #{ mark: 'hist' },
+"    \ })
+"
+"  autocmd CmdlineLeave ++once call CommandlinePost()
+"
+"  " Enable command line completion
+"  call ddc#enable_cmdline_completion()
+"endfunction
+"function! CommandlinePost() abort
+"  " Restore sources
+"  call ddc#custom#set_buffer(s:prev_buffer_config)
+"endfunction
 "========================================="
 " plugin Manager: vim-plug setting
 "========================================="
@@ -191,7 +191,7 @@ if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
 
   " プラグインリストを収めた TOML ファイル
-  " 予め TOML ファイル（後述）を用意しておく
+  " 予め TOML ファイルを用意しておく
   let g:rc_dir    = expand('~/.config/nvim/rc')
   let s:toml      = g:rc_dir . '/dein.toml'
   let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
