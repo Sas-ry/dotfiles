@@ -1,27 +1,50 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
+# 自動補完
+#[[plugins]]
+#repo = 'Shougo/deoplete.nvim'
 
+# color Sheme
 [[plugins]]
-repo = 'rakr/vim-one'
+repo = 'sainnhe/gruvbox-material'
 
+# ステータスライン
 [[plugins]]
 repo = 'vim-airline/vim-airline'
 
+# ステータスライン
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
 
+# ファイルツリーのアイコン
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
 
+# git差分表示
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
 
 [[plugins]]
 repo = 'rust-lang/rust.vim'
 
+# ファイラ
+[[plugins]]
+repo = 'lambdalisue/fern.vim'
+
+# fernでのアイコン表示
+[[plugins]]
+repo = 'lambdalisue/fern-renderer-nerdfont.vim'
+
+# アイコン全般
+[[plugins]]
+repo = 'lambdalisue/nerdfont.vim'
+
+# ファイラアイコンカラースキーム
+[[plugins]]
+repo = 'lambdalisue/glyph-palette.vim'
+
+# 自動補完
 [[plugins]]
 repo = 'neoclide/coc.nvim'
 rev = 'release'
