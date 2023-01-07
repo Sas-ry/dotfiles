@@ -21,7 +21,7 @@ call plug#begin('$HOME/.local/share/nvim/plugged')
 "Plug 'rust-lang/rust.vim'
 "Plug 'ryanoasis/vim-devicons'
 "Plug 'vim-denops/denops.vim'
-"
+
 "Plug 'Shougo/ddc.vim'
 "Plug 'Shougo/ddc-around'
 "Plug 'Shougo/ddc-matcher_head'
@@ -166,7 +166,23 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   \| PlugInstall --sync | source $MYVIMRC
 \| endif
 
+"========================================="
+" plugin Fern Setting
+"========================================="
 
+" Show hidden files
+let g:fern#default_hidden=1
+" Show icon
+let g:fern#renderer = 'nerdfont'
+
+" Show file tree with Ctrl + n
+nnoremap <C-n> :Fern . -reveal=% -drawer -toggle -width=30<CR>
+
+augroup my-glyph-palette
+  autocmd! *
+  autocmd FileType fern call glyph_palette#apply()
+  autocmd FileType nerdtree,startify call glyph_palette#apply()
+augroup END
 "========================================="
 " plugin Manager: dein.vim setting
 " deinが上手く動作しない場合、:call dein#update()と

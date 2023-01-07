@@ -28,6 +28,21 @@ repo = 'airblade/vim-gitgutter'
 [[plugins]]
 repo = 'rust-lang/rust.vim'
 
+# ファイラ
+[[plugins]]
+repo = 'lambdalisue/fern.vim'
+
+# fernでのアイコン表示
+[[plugins]]
+repo = 'lambdalisue/fern-renderer-nerdfont.vim'
+
+# アイコン全般
+[[plugins]]
+repo = 'lambdalisue/nerdfont.vim'
+
+# ファイラアイコンカラースキーム
+[[plugins]]
+repo = 'lambdalisue/glyph-palette.vim'
 # 自動補完
 #[[plugins]]
 #repo = 'neoclide/coc.nvim'
