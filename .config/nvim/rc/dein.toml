@@ -2,8 +2,8 @@
 repo = 'Shougo/dein.vim'
 
 # 自動補完
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
+#[[plugins]]
+#repo = 'Shougo/deoplete.nvim'
 
 # color Sheme
 [[plugins]]
@@ -43,9 +43,10 @@ repo = 'lambdalisue/nerdfont.vim'
 # ファイラアイコンカラースキーム
 [[plugins]]
 repo = 'lambdalisue/glyph-palette.vim'
+
 # 自動補完
-#[[plugins]]
-#repo = 'neoclide/coc.nvim'
-#rev = 'release'
-#merged = 0
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+rev = 'release'
+merged = 0
 

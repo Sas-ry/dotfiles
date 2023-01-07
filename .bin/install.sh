@@ -65,8 +65,22 @@ powerline_fonts() {
   command echo -e "\e[1;36m Installation of powerline_fonts completed!! \e[m"
 }
 
+node_install() {
+  if [ "$(uname)" == "Darwin" ]; then
+    command echo "Mac"
+  elif [ "$(expr substr $(uname -s) 1 5)" == "MINGW" ]; then
+    command echo "Windows"
+  elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+    command echo "Linux"
+    sudo apt -y install nodejs
+  else
+    command echo "Unknown OS"
+  fi
+}
+
 link_to_homedir
 nerd_fonts
 powerline_fonts
+node_install
 git config --global include.path "~/.gitconfig_shared"
 command echo -e "\e[1;36m Install completed!!!! \e[m"
