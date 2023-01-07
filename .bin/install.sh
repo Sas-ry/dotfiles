@@ -46,6 +46,27 @@ while [ $# -gt 0 ];do
   shift
 done
 
+# nerd_fontsインストール後Windows Terminalの場合はダウンロードしたフォントをインストールする必要がある
+nerd_fonts() {
+  git clone --branch=master --depth 1 https://github.com/ryanoasis/nerd-fonts.git
+  cd nerd-fonts
+  ./install.sh  # install all fonts
+  cd ..
+  rm -rf nerd-fonts
+  command echo -e "\e[1;36m Installation of nerd_fonts completed!! \e[m"
+}
+
+powerline_fonts() {
+  git clone --branch=master --depth 1 https://github.com/powerline/fonts.git
+  cd fonts
+  ./install.sh # install all fonts
+  cd ..
+  rm -fr fonts
+  command echo -e "\e[1;36m Installation of powerline_fonts completed!! \e[m"
+}
+
 link_to_homedir
+nerd_fonts
+powerline_fonts
 git config --global include.path "~/.gitconfig_shared"
 command echo -e "\e[1;36m Install completed!!!! \e[m"

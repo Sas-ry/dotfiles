@@ -1,29 +1,36 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
+# 自動補完
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
 
+# color Sheme
 [[plugins]]
 repo = 'rakr/vim-one'
 
+# ステータスライン
 [[plugins]]
 repo = 'vim-airline/vim-airline'
 
+# ステータスライン
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
 
+# ファイルツリーのアイコン
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
 
+# git差分表示
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
 
 [[plugins]]
 repo = 'rust-lang/rust.vim'
 
-[[plugins]]
-repo = 'neoclide/coc.nvim'
-rev = 'release'
-merged = 0
+# 自動補完
+#[[plugins]]
+#repo = 'neoclide/coc.nvim'
+#rev = 'release'
+#merged = 0
 

@@ -12,7 +12,7 @@ set helplang=ja
 " terminal ノーマルモード移行<Esc>キーで出来る様にする
 tnoremap <Esc> <C-\><C-n>
 
-"call plug#begin('$HOME/.local/share/nvim/plugged')
+call plug#begin('$HOME/.local/share/nvim/plugged')
 "Plug 'neovim/nvim-lspconfig'
 "Plug 'rakr/vim-one'
 "Plug 'vim-airline/vim-airline'
@@ -33,12 +33,12 @@ tnoremap <Esc> <C-\><C-n>
 "Plug 'Shougo/ddc-cmdline-history'
 "Plug 'tani/ddc-fuzzy'
 "Plug 'lambdalisue/fern.vim'
-"
+
 "Plug 'matsui54/denops-popup-preview.vim'
 "Plug 'ray-x/lsp_signature.nvim'
-"
-"call plug#end()
-"
+
+call plug#end()
+
 ""========================================="
 "" ddc.vim plugin setting 
 ""========================================="
@@ -154,21 +154,23 @@ tnoremap <Esc> <C-\><C-n>
 " plugin Manager: vim-plug setting
 "========================================="
 
-"" vim-plug なかったら落としてくる
-"if empty(glob('$HOME/.local/share/nvim/site/autoload/plug.vim'))
-"  silent !curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs
-"    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-"  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-"endif
-"
-"" 足りないプラグインがあれば :PlugInstall を実行
-"autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-"  \| PlugInstall --sync | source $MYVIMRC
-"\| endif
+" vim-plug なかったら落としてくる
+if empty(glob('$HOME/.local/share/nvim/site/autoload/plug.vim'))
+  silent !curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" 足りないプラグインがあれば :PlugInstall を実行
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
 
 
 "========================================="
 " plugin Manager: dein.vim setting
+" deinが上手く動作しない場合、:call dein#update()と
+" :call dein#recache_runtimepath()を実行する
 "========================================="
 if &compatible
   set nocompatible
