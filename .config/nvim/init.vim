@@ -79,8 +79,9 @@ augroup my-glyph-palette
 augroup END
 
 "========================================="
-" plugin fzf-preview Setting
+" plugin fzf-preview setting
 "========================================="
+
 let $BAT_THEME                     = 'gruvbox-dark'
 let $FZF_PREVIEW_PREVIEW_BAT_THEME = 'gruvbox-dark'
 
@@ -96,6 +97,34 @@ nnoremap <silent> <Plug>(lsp)d  <Cmd>CocCommand fzf-preview.CocDefinition<CR>
 nnoremap <silent> <Plug>(lsp)t  <Cmd>CocCommand fzf-preview.CocTypeDefinition<CR>
 nnoremap <silent> <Plug>(lsp)o  <Cmd>CocCommand fzf-preview.CocOutline --add-fzf-arg=--exact --add-fzf-arg=--no-sort<CR>
 
+"========================================="
+" plugin coc.nvim setting
+"========================================="
+
+let g:coc_global_extensions = ['coc-tsserver', 'coc-eslint', 'coc-prettier', 'coc-git', 'coc-fzf-preview', 'coc-lists']
+
+inoremap <silent> <expr> <C-Space> coc#refresh()
+
+nnoremap <silent> K             <Cmd>call <SID>show_documentation()<CR>
+nmap     <silent> <Plug>(lsp)rn <Plug>(coc-rename)
+nmap     <silent> <Plug>(lsp)a  <Plug>(coc-codeaction-cursor)
+
+function! s:coc_typescript_settings() abort
+  nnoremap <silent> <buffer> <Plug>(lsp)f :<C-u>CocCommand eslint.executeAutofix<CR>:CocCommand prettier.formatFile<CR>
+endfunction
+
+augroup coc_ts
+  autocmd!
+  autocmd FileType typescript,typescriptreact call <SID>coc_typescript_settings()
+augroup END
+
+function! s:show_documentation() abort
+  if index(['vim','help'], &filetype) >= 0
+    execute 'h ' . expand('<cword>')
+  elseif coc#rpc#ready()
+    call CocActionAsync('doHover')
+  endif
+endfunction
 "========================================="
 " setting
 "========================================="
