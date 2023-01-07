@@ -7,7 +7,7 @@ repo = 'Shougo/deoplete.nvim'
 
 # color Sheme
 [[plugins]]
-repo = 'rakr/vim-one'
+repo = 'sainnhe/gruvbox-material'
 
 # ステータスライン
 [[plugins]]

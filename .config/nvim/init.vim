@@ -235,7 +235,7 @@ let g:dein#install_max_processes = 16
 filetype plugin indent on
 
 syntax enable
-colorscheme one
+colorscheme gruvbox-material
 let g:airline_theme = 'wombat'
 " powerline enable(最初に設定しないとダメ)
 let g:airline_powerline_fonts = 1
