@@ -270,11 +270,40 @@ local plugins = {
   },
 
   ---------------------------
+  -- Treesitter
+  {
+    "nvim-treesitter/nvim-treesitter",
+		event = { "VimEnter" },
+		build = ":TSUpdateSync",
+		config = function()
+			require("rc/pluginconfig/nvim-treesitter")
+		end,
+		dependencies = {
+			{ "JoosepAlviste/nvim-ts-context-commentstring" },
+			{ "nvim-treesitter/nvim-treesitter-refactor" },
+			{ "nvim-treesitter/nvim-tree-docs" },
+			{ "vigoux/architext.nvim" },
+			{ "yioneko/nvim-yati" },
+		},
+  },
+
+  --------------------------------
+	-- Treesitter textobject & operator
+	{ "nvim-treesitter/nvim-treesitter-textobjects", event = "VimEnter" },
+	{
+		"chrisgrieser/nvim-various-textobjs",
+		event = "VimEnter",
+		config = function()
+			require("rc/pluginconfig/nvim-various-textobjs")
+		end,
+	},
+
+  ---------------------------
   -- Lua Library
   { "nvim-lua/popup.nvim" },
   { "MunifTanjim/nui.nvim" },
   { "nvim-lua/plenary.nvim" },
-  { "kkharji/sqlite.lua" },
+  { "kkharji/sqlite.lua"},
 
   ---------------------------
   -- Snippet
