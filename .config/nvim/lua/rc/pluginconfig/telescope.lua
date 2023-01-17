@@ -187,7 +187,8 @@ require("telescope").setup({
 				["<CR>"] = custom_actions.multi_selection_open,
 			},
 		},
-		history = { path = vim.fn.stdpath("state") .. "/databases/telescope_history.sqlite3", limit = 100 },
+		-- history = { path = vim.fn.stdpath("state") .. "/databases/telescope_history.sqlite3", limit = 100 },
+     history = { path = "~/.local/share/nvim/databases/telescope_history.sqlite3", limit = 100 },
 	},
 	extensions = {
 		media_files = {
@@ -430,12 +431,8 @@ vim.api.nvim_set_keymap("n", "[_FuzzyFinder]l", "<Cmd>Telescope loclist<CR>", { 
 vim.api.nvim_set_keymap("n", "[_FuzzyFinder]m", "<Cmd>Telescope marks<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "[_FuzzyFinder]r", "<Cmd>Telescope registers<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "[_FuzzyFinder]*", "<Cmd>Telescope grep_string<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap(
-	"n",
-	"[_FuzzyFinder]f",
-	"<Cmd>Telescope file_browser file_browser<CR>",
-	{ noremap = true, silent = true }
-)
+-- The [_FuzzyFinder]f command cannot be used because the file_browser plugin is not installed
+vim.api.nvim_set_keymap("n", "[_FuzzyFinder]f", "<Cmd>Telescope file_browser file_browser<CR>", { noremap = true, silent = true })
 -- git
 vim.api.nvim_set_keymap(
 	"n",
