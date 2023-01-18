@@ -22,6 +22,7 @@ local local_plugins = load_local_plugins() or {}
 
 ----------------------------------------------------------------
 local plugins = {
+
   ---------------------------
   -- Installer
   { "folke/lazy.nvim" },
@@ -298,12 +299,31 @@ local plugins = {
 		end,
 	},
 
-  ---------------------------
-  -- Lua Library
-  { "nvim-lua/popup.nvim" },
-  { "MunifTanjim/nui.nvim" },
-  { "nvim-lua/plenary.nvim" },
-  { "kkharji/sqlite.lua"},
+
+  --------------------------------
+  -- Coding(Writing assist)
+  { 
+    "nmac427/guess-indent.nvim",
+    event = { "BufNewFile", "BufReadPre" },
+    config = function()
+            require("guess-indent").setup()
+    end,
+  },
+
+
+  --------------------------------
+  -- Brackets
+  {
+    "theHamsta/nvim-treesitter-pairs",
+    event = "VimEnter",
+  },
+  {
+    "hrsh7th/nvim-insx",
+		event = "VimEnter",
+		config = function()
+			require("rc/pluginconfig/nvim-insx")
+		end,
+  },
 
   ---------------------------
   -- Snippet
@@ -321,6 +341,21 @@ local plugins = {
             require("telescope").load_extension("luasnip")
     end,
   },
+
+
+  ---------------------------
+  -- Language-specific plugins
+  
+  -- Rust
+  { "simrat39/rust-tools.nvim" },
+
+  ---------------------------
+  -- Lua Library
+  { "nvim-lua/popup.nvim" },
+  { "MunifTanjim/nui.nvim" },
+  { "nvim-lua/plenary.nvim" },
+  { "kkharji/sqlite.lua"},
+
 }
 
 require("lazy").setup(vim.tbl_deep_extend("force", plugins, local_plugins), {
