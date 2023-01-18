@@ -22,6 +22,7 @@ local local_plugins = load_local_plugins() or {}
 
 ----------------------------------------------------------------
 local plugins = {
+
   ---------------------------
   -- Installer
   { "folke/lazy.nvim" },
@@ -307,6 +308,21 @@ local plugins = {
     config = function()
             require("guess-indent").setup()
     end,
+  },
+
+
+  --------------------------------
+  -- Brackets
+  {
+    "theHamsta/nvim-treesitter-pairs",
+    event = "VimEnter",
+  },
+  {
+    "hrsh7th/nvim-insx",
+		event = "VimEnter",
+		config = function()
+			require("rc/pluginconfig/nvim-insx")
+		end,
   },
 
   ---------------------------
