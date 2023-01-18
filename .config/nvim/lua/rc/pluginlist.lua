@@ -326,13 +326,6 @@ local plugins = {
   },
 
   ---------------------------
-  -- Lua Library
-  { "nvim-lua/popup.nvim" },
-  { "MunifTanjim/nui.nvim" },
-  { "nvim-lua/plenary.nvim" },
-  { "kkharji/sqlite.lua"},
-
-  ---------------------------
   -- Snippet
   { 
     "L3MON4D3/LuaSnip",
@@ -348,6 +341,21 @@ local plugins = {
             require("telescope").load_extension("luasnip")
     end,
   },
+
+
+  ---------------------------
+  -- Language-specific plugins
+  
+  -- Rust
+  { "simrat39/rust-tools.nvim" },
+
+  ---------------------------
+  -- Lua Library
+  { "nvim-lua/popup.nvim" },
+  { "MunifTanjim/nui.nvim" },
+  { "nvim-lua/plenary.nvim" },
+  { "kkharji/sqlite.lua"},
+
 }
 
 require("lazy").setup(vim.tbl_deep_extend("force", plugins, local_plugins), {
