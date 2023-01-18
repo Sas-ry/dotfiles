@@ -298,6 +298,17 @@ local plugins = {
 		end,
 	},
 
+
+  --------------------------------
+  -- Coding(Writing assist)
+  { 
+    "nmac427/guess-indent.nvim",
+    event = { "BufNewFile", "BufReadPre" },
+    config = function()
+            require("guess-indent").setup()
+    end,
+  },
+
   ---------------------------
   -- Lua Library
   { "nvim-lua/popup.nvim" },
