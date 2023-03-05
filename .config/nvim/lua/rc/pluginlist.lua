@@ -1,3 +1,5 @@
+----------------------------------------------------------------
+-- lazy install
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
@@ -12,7 +14,7 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 ----------------------------------------------------------------
----- Load local plugins
+-- Load local plugins
 local function load_local_plugins()
 	if vim.fn.filereadable(vim.fn.expand("~/.nvim_pluginlist_local.lua")) == 1 then
 		return dofile(vim.fn.expand("~/.nvim_pluginlist_local.lua"))
@@ -23,12 +25,13 @@ local local_plugins = load_local_plugins() or {}
 ----------------------------------------------------------------
 local plugins = {
 
-  ---------------------------
+  --------------------------------
   -- Installer
   { "folke/lazy.nvim" },
 
-  ---------------------------
-  -- External package Installer(successor to nvim-lsp-installer)
+  --------------------------------
+  -- External package Installer
+  -- successor to nvim-lsp-installer
   {
     "williamboman/mason.nvim",
     event = "BufReadPre",
@@ -37,14 +40,14 @@ local plugins = {
     end,
   },
 
-  ---------------------------
+  --------------------------------
   -- Font
   { 
     "kyazdani42/nvim-web-devicons", 
     event = "BufReadPre",
   },
 
-  ---------------------------
+  -------------------------------
   -- Statusline
   {
     "nvim-lualine/lualine.nvim",
@@ -54,7 +57,7 @@ local plugins = {
     end,
   },
 
-  ---------------------------
+  -------------------------------
   -- Filer
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -65,7 +68,7 @@ local plugins = {
     end,
   },
 
-  ---------------------------
+  -------------------------------
   -- Sidebar
   -- conflict with clever-f (augroup sidebar_nvim_prevent_buffer_override)
   {
@@ -77,7 +80,7 @@ local plugins = {
     end,
   },
 
-  ---------------------------
+  -------------------------------
   -- ColorScheme
   { 
     "ellisonleao/gruvbox.nvim",
@@ -86,6 +89,7 @@ local plugins = {
             require("rc/pluginconfig/gruvbox")
     end,
   },
+
   -- Statusline ColorScheme
   {
     "EdenEast/nightfox.nvim",
@@ -95,8 +99,10 @@ local plugins = {
     end,
   },
 
-  ---------------------------
+  -------------------------------
   -- FuzzyFinders
+  -------------------------------
+  
   -- telescope.nvim
   {
     "nvim-telescope/telescope.nvim",
@@ -163,7 +169,7 @@ local plugins = {
     },
   },
 
-  ---------------------------
+  -------------------------------
   -- Git
   {
     "lewis6991/gitsigns.nvim",
@@ -173,9 +179,7 @@ local plugins = {
     end,
   },
 
-  ---------------------------
-  -- LSP & completion
-  ---------------------------
+  -------------------------------
   -- Auto Completion
   {
     "hrsh7th/nvim-cmp",
@@ -218,8 +222,8 @@ local plugins = {
     },
   },
 
-  ---------------------------
-  -- Language Server Protocol(LSP)
+  -------------------------------
+  -- LSP
   {
     "neovim/nvim-lspconfig",
     event = "BufReadPre",
@@ -243,7 +247,7 @@ local plugins = {
     },
   },
 
-  ---------------------------
+  -------------------------------
   -- LSP's UI
   {
     "glepnir/lspsaga.nvim",
@@ -270,7 +274,7 @@ local plugins = {
     end,
   },
 
-  ---------------------------
+  -------------------------------
   -- Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
@@ -288,7 +292,7 @@ local plugins = {
 		},
   },
 
-  --------------------------------
+  -------------------------------
 	-- Treesitter textobject & operator
 	{ "nvim-treesitter/nvim-treesitter-textobjects", event = "VimEnter" },
 	{
@@ -300,7 +304,7 @@ local plugins = {
 	},
 
 
-  --------------------------------
+  -------------------------------
   -- Coding(Writing assist)
   { 
     "nmac427/guess-indent.nvim",
@@ -311,7 +315,7 @@ local plugins = {
   },
 
 
-  --------------------------------
+  -------------------------------
   -- Brackets
   {
     "theHamsta/nvim-treesitter-pairs",
@@ -325,7 +329,7 @@ local plugins = {
 		end,
   },
 
-  ---------------------------
+  -------------------------------
   -- Snippet
   { 
     "L3MON4D3/LuaSnip",
@@ -342,14 +346,23 @@ local plugins = {
     end,
   },
 
+  -------------------------------
+  -- hover
+  {
+    "lewis6991/hover.nvim",
+		event = "VimEnter",
+		config = function()
+			require("rc/pluginconfig/hover")
+		end,
+  },
 
-  ---------------------------
+  -------------------------------
   -- Language-specific plugins
   
   -- Rust
   { "simrat39/rust-tools.nvim" },
 
-  ---------------------------
+  -------------------------------
   -- Lua Library
   { "nvim-lua/popup.nvim" },
   { "MunifTanjim/nui.nvim" },

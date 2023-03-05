@@ -1,5 +1,6 @@
 local lspsaga = require("lspsaga")
-lspsaga.setup({ -- defaults ...
+lspsaga.setup({ 
+	-- defaults ...
 	-- use emoji lightbulb in default
 	code_action_icon = " ",
 	code_action_lightbulb = {
