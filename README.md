@@ -1,9 +1,9 @@
 # dotfiles
 
 ## dotfiles list
-・kitty
-
-・neovim
-
-・zsh
+・kitty  
+　→使わないから凍結  
+・neovim   
+・zsh  
+・wezterm
 
