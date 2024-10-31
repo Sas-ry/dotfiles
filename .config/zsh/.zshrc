@@ -17,8 +17,10 @@ if [ -d "${NEOVIM_HOME}" ]; then
   export PATH="${NEOVIM_HOME}/bin:$PATH"
 fi
 
-#export PATH=$PATH:/usr/local/opt/llvm/bin
 export PATH=/opt/homebrew/bin:$PATH
+export PATH=/opt/homebrew/sbin:$PATH
+# llvmデバッグ用記載
+export PATH=/opt/homebrew/opt/llvm/bin:$PATH
 export GOPATH=$HOME
 export PATH=$PATH:$GOPATH/bin
 
